@@ -1,3 +1,4 @@
+![file-storage-app2](https://github.com/user-attachments/assets/03331ff8-ea5a-4a62-9316-83d53818fe8a)
 ## ⚠️Important
 
 I have removed the `firebase_options.json` file , `.env` file and other credentials linked with this repo,
@@ -23,6 +24,7 @@ Replace with your actual keys and create .env file.
 ## 🔥 Firebase Rules
 
 use this rules to restrict only the current user to read and write in cloud firestore of specific user doc.
+*copy from below or get [it here.](https://github.com/Snehasis4321/flutter_cloudinary_file_upload/blob/master/firebase_rules.txt)*
 
 ```js
 rules_version = '2';
