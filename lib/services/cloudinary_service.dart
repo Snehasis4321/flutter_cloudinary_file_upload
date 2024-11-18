@@ -7,6 +7,8 @@ import 'package:flutter_cloudinary_file_upload/services/db_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import "package:http/http.dart" as http;
 import 'package:crypto/crypto.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart'; // For accessing device directories
 
 Future<bool> uploadToCloudinary(FilePickerResult? filePickerResult) async {
   if (filePickerResult == null || filePickerResult.files.isEmpty) {
@@ -112,6 +114,50 @@ Future<bool> deleteFromCloudinary(String publicId) async {
   } else {
     print(
         "Failed to delete the file, status: ${response.statusCode} : ${response.reasonPhrase}");
+    return false;
+  }
+}
+
+// download the user file inside the download folder
+Future<bool> downloadFileFromCloudinary(String url, String fileName) async {
+  try {
+    // Request storage permission
+    var status = await Permission.storage.request();
+    var manageStatus = await Permission.manageExternalStorage.request();
+    if (status == PermissionStatus.granted &&
+        manageStatus == PermissionStatus.granted) {
+      // The user has granted both permissions, so proceed
+      print("Storage permissions granted");
+    } else {
+      // The user has permanently denied one or both permissions, so open the settings
+      await openAppSettings();
+    }
+
+    // Get the Downloads directory
+    Directory? downloadsDir = Directory('/storage/emulated/0/Download');
+    if (!downloadsDir.existsSync()) {
+      print("Downloads directory not found");
+      return false;
+    }
+
+    // Create the file path
+    String filePath = '${downloadsDir.path}/$fileName';
+
+    // Make the HTTP GET request
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      // Write file to Downloads folder
+      File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      print("File downloaded successfully! Saved at: $filePath");
+      return true;
+    } else {
+      print("Failed to download file. Status code: ${response.statusCode}");
+      return false;
+    }
+  } catch (e) {
+    print("Error downloading file: $e");
     return false;
   }
 }

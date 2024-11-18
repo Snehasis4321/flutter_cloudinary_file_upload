@@ -1,9 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cloudinary_file_upload/services/auth_service.dart';
+import 'package:flutter_cloudinary_file_upload/services/cloudinary_service.dart';
 import 'package:flutter_cloudinary_file_upload/services/db_service.dart';
 import 'package:flutter_cloudinary_file_upload/views/preview_image.dart';
 import 'package:flutter_cloudinary_file_upload/views/preview_video.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -159,6 +161,29 @@ class _HomePageState extends State<HomePage> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
+                                  IconButton(
+                                      onPressed: () async {
+                                        final donwload_result =
+                                            await downloadFileFromCloudinary(
+                                                fileUrl, name);
+                                        if (donwload_result) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text("File downloaded"),
+                                            ),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  "Error in downloading the file."),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      icon: Icon(Icons.download))
                                 ],
                               ),
                             )
