@@ -1,16 +1,27 @@
-# flutter_cloudinary_file_upload
+## Important
+I have removed the `firebase_options.json` file , `.env` file and other credentials linked with this repo,
+you need to initialize the app with your firebase project to test this app.
 
-A new Flutter project.
+- make sure you initialize your own firebase project
+  follow the steps shown in the video
+  - like firebase login
+  - fluttercli initialize
+  - flutterfire configure
+  - this will create and add the required files.
+- and use your own cloudinary account for api and secret keys.
+the `.env` will be in the root of the folders.
+```bash
+CLOUDINARY_CLOUD_NAME="******"
+CLOUDINARY_API_KEY="*****"
+CLOUDINARY_SECRET_KEY="*****************"
+```
+Replace with your actual keys and create .env file.
 
-## Getting Started
+## Useful Links -
+- [Cloudinary Api Docs Link](https://cloudinary.com/documentation/image_upload_api_reference)
+- [Firebase Cli Setup](https://firebase.google.com/docs/cli)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Authors - 
+<img style="width: 50px; height: 50px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/96995340" alt="snehasis4321"></img>
+[snehasis4321](https://github.com/Snehasis4321)
